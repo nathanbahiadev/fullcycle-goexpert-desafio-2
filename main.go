@@ -20,13 +20,13 @@ func main() {
 	}
 
 	cep.Clear()
-	address, err := GetAddress(cep, services.BrasilAPIService)
+	address, err := GetAddress(cep, services.BrasilAPIService, services.ViaCepService)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("============== Resultados encontrados! ==============")
+	fmt.Println("================ Endereço localizado! ===============")
 	fmt.Println("Cep:", address.GetCep())
 	fmt.Println("Street:", address.GetStreet())
 	fmt.Println("Neighborhood:", address.GetNeighborhood())
@@ -51,6 +51,6 @@ func GetAddress(cep services.CEP, funcs ...services.TGetAddressFuncService) (ser
 		return address, nil
 
 	case <-ctx.Done():
-		return nil, errors.New("timeout ao consultar CEP")
+		return nil, errors.New("timeout ao consultar endereço")
 	}
 }
